@@ -17,6 +17,15 @@ describe Item do
     it "is assigned a price" do
       expect(@item.price).to eq(1.99)
     end
+
+    # item2 is a local variable and not a instance variable that can be passed around
+    it "should be able to be initalized with a weight" do
+      item2 = Item.new("Generic Item2",2.99,2.2)
+      expect(item2.name).to eq("Generic Item2")
+      expect(item2.price).to eq(2.99)
+      expect(item2.weight).to eq(2.2)
+    end
+
   end
 
   describe "Accessors" do
@@ -35,7 +44,14 @@ describe Item do
       expect(@item.description).to eq("")
       @item.description="test"
       expect(@item.description).to eq("test")
-    end    
+    end   
+
+    it "should be able to get and set weight" do
+      expect(@item.weight).to eq(0)
+      @item.weight = 5
+      expect(@item.weight).to eq(5)
+    end 
+
   end
 
   describe "Methods" do
@@ -50,10 +66,22 @@ describe Item do
       expect(@item.quantity).to eq(5)
     end
     it "should be able to sell items and update quantity" do
-      result = @item.sell 3
+      result = @item.sell 2
       expect(result).to eq(true)
-      expect(@item.quantity).to eq(2)
-    end    
+      expect(@item.quantity).to eq(3)
+    end  
+
+    it "should be able to return items and update quantity" do
+      result = @item.return 6
+      expect(result).to eq(true)
+      expect(@item.quantity).to eq(9)
+    end
+
+    it "should be able to calculate ship price based on weight with ship_price" do
+      expect(@item.ship_price).to eq(5 * 1.2)
+    end
+
+
   end
 
 end

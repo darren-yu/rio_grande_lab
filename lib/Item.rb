@@ -1,12 +1,15 @@
 class Item
     attr_reader :quantity
-    attr_accessor :name, :price, :description
+    attr_accessor :name, :price, :description, :weight
 
-    def initialize name, price
+        @@ship_price_per_oz = 1.2
+    # weight is default to 0 and can be set based on optional input
+    def initialize name, price, weight=0
         @name = name
         @price = price
         @quantity = 0
         @description = ""
+        @weight = weight
     end
 
     def sell amount
@@ -22,4 +25,16 @@ class Item
         @quantity += amount
         true
     end
+
+    def return amount
+        @quantity += amount
+        true
+    end
+
+    def ship_price 
+        return false if @weight == -1
+        @@ship_price_per_oz * @weight
+    end
+
 end
+
